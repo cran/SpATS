@@ -21,11 +21,14 @@ For each spatial coordinate, \code{grid[k]} equally spaced values between the mi
 A list with the following components:
 \item{col.p}{x-coordinate values at which predictions have been computed.}
 \item{row.p}{y-coordinate values at which predictions have been computed}
-\item{fit}{a matrix of dimension length(row.p) x length(col.p) with the predicted spatial trend.}
+\item{fit}{a matrix of dimension length(row.p) x length(col.p) with the predicted spatial trend (excluding the intercept).}
+\item{pfit}{for the PS-ANOVA approach, a list with 5 matrices of dimension length(row.p) x length(col.p) with each predicted spatial component (2 main effects, 2 linear-by-smooth components and 1 smooth-by-smooth component).}
 }
-%\references{
-%% ~put references to the literature/web site here ~
-%}
+\references{
+Lee, D.-J., Durban, M., and Eilers, P.H.C. (2013). Efficient two-dimensional smoothing with P-spline ANOVA mixed models and nested bases. Computational Statistics and Data Analysis, 61, 22 - 37.
+
+Rodriguez-Alvarez, M.X, Boer, M.P., van Eeuwijk, F.A., and Eilers, P.H.C. (2016). Spatial Models for Field Trials. Available on arXiv at http://arxiv.org/abs/1607.08255.
+}
 %\author{
 %%  ~~who you are~~
 %}

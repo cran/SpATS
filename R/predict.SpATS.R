@@ -52,7 +52,7 @@ function(object, newdata = NULL, which = NULL, ...) {
 	# Construct matrices
 	spatial.part <- construct.spatial.prediction.matrix(object, newdata)
 	if(!is.null(which)) {
-		# Delete spatial prediction if the spatial coordinates have not been spedified in the argument 'which'
+		# Delete spatial prediction if the spatial coordinates have not been specified in the argument 'which'
 		if(!(object$terms$spatial$terms.formula$x.coord %in% which) & !(object$terms$spatial$terms.formula$y.coord%in%which)) {
 			spatial.part$X <- matrix(0, ncol = ncol(spatial.part$X), nrow = nrow(spatial.part$X))
 			spatial.part$Z <- matrix(0, ncol = ncol(spatial.part$Z), nrow = nrow(spatial.part$Z))

@@ -7,13 +7,14 @@ Default SpATS plotting
 Takes a fitted \code{SpATS} object produced by \code{SpATS()} and plots six different graphics (see Details).
 }
 \usage{
-\method{plot}{SpATS}(x, all.in.one = TRUE, main = NULL, annotated = FALSE, ...)
+\method{plot}{SpATS}(x, all.in.one = TRUE, main = NULL, annotated = FALSE, depict.missing = FALSE, ...)
 }
 \arguments{
 	\item{x}{an object of class \code{SpATS} as produced by \code{SpATS()}.}
 	\item{all.in.one}{logical. If TRUE, the four plots are depicted in one window. Default is TRUE}
 	\item{main}{character string specifying the main title to appear on the plot. By default (i.e. when main = NULL), the variable under study is incorporated in the title of the plot.}
 	\item{annotated}{logical. If TRUE, the variable under study and the models used is added to the plot. Only applied when argument \code{all.in.one} is TRUE.}
+	\item{depict.missing}{logical. If TRUE, the estimated spatial trend is depicted for all plots in the field, even for those with missing values.}
 	\item{\dots}{further arguments passed to or from other methods. Not yet implemented.}
 }
 \details{

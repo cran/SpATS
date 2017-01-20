@@ -6,8 +6,8 @@ function(x, ...) {
 	y.coord <- x$data[,ylab]
 	residuals <- x$residuals
 	
-	columns <- sort(unique(x.coord))
-	rows <- sort(unique(y.coord))
+	columns <- seq(min(x.coord), max(x.coord), by = min(diff(sort(unique(x.coord)))))
+	rows <- seq(min(y.coord), max(y.coord), by = min(diff(sort(unique(y.coord)))))
 	
 	xy.coord <- data.table(expand.grid(columns = columns, rows = rows))
 	setkeyv(xy.coord, c("rows", "columns"))
