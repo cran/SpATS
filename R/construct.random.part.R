@@ -6,8 +6,9 @@ function(formula, data) {
 		
     mf <- model.frame(formula, data, drop.unused.levels = TRUE, na.action = NULL)
 	mt <- terms(mf)    
-	f.terms <- attr(mt, "term.labels")[attr(mt,"dataClasses") == "factor"]
-	Z <- model.matrix(mt, data = mf, contrasts.arg = lapply(mf[,f.terms, drop = FALSE], contrasts, contrasts=FALSE))
+	#f.terms <- attr(mt, "term.labels")[attr(mt,"dataClasses") == "factor"]
+	f.terms <- all.vars(mt)[attr(mt,"dataClasses") == "factor"]
+	Z <- model.matrix(mt, data = mf, contrasts.arg = lapply(mf[,f.terms, drop = FALSE], contrasts, contrasts = FALSE))
 	Z[is.na(Z)] <- 0
 	
 	attr(mt, "contrast") <- attr(Z,"contrast")

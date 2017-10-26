@@ -4,6 +4,15 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 	
 	if (control$monitoring) start = proc.time()[3]
 	
+	if (is.character(family)) 
+        family <- get(family, mode = "function", envir = parent.frame())
+    if (is.function(family)) 
+        family <- family()
+    if (is.null(family$family)) {
+        print(family)
+        stop("'family' not recognized")
+    }
+
 	weights <- as.vector(weights)
 	if(is.null(weights)) weights = rep(1, nrow(data))
 	if(length(offset) == 1) offset <- rep(offset, nrow(data))
@@ -18,7 +27,7 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 	sf <- interpret.SpATS.formula(spatial)
 	
 	# NAs in the covariates
-	model.terms <- c(sf$x.coord, sf$y.coord, if(genotype.as.random) geno.decomp else genotype, if(!is.null(fixed)) attr(terms.formula(fixed), "term.labels"))
+	model.terms <- c(sf$x.coord, sf$y.coord, if(genotype.as.random) geno.decomp else genotype, if(!is.null(fixed)) all.vars(fixed))
 	na.ind <- apply(is.na(data[,model.terms]), 1, any)
 	na.pos <- (1:nrow(data))[!na.ind]
 	weights = weights*(!na.ind)*(!is.na(data[,response]))
@@ -46,15 +55,20 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 	df.fixed <- sum(dim[!random.])
 
 	# Fixed and random effects
-	bold = rep(0, sum(dim, na.rm = TRUE))
+	# bold = rep(0, sum(dim, na.rm = TRUE))
+	# Fit the model
+	# eta <- cbind.spam(MMs, MMns)%*%bold + offset.na
+	# mu <- family$linkinv(eta)
+	mustart <- etastart <- NULL
+	eval(family$initialize)
+	mu <- mustart
+	eta <- family$linkfun(mustart)
+
 	# Initialize variance components
 	la = c(1, unlist(MM$init.var))
 	# Initialize deviance and psi
 	devold = 1e10
 	psi = la[1]
-	# Fit the model
-	eta <- cbind.spam(MMs, MMns)%*%bold + offset.na
-	mu <- family$linkinv(eta)
 	if(control$monitoring > 1) {
 		cat("Effective dimensions\n")
 		cat("-------------------------\n")
@@ -184,16 +198,16 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 	res$call <- match.call()
 	res$data <- cbind(data, weights = weights)
 	res$model <- list(response = response, spatial = spatial, geno = list(genotype = genotype, geno.decomp = geno.decomp, as.random = genotype.as.random), fixed = fixed, random = random)
-	res$fitted = fitted
-	res$residuals = dev.residuals
-	res$psi = c(la[1], psi)
-	res$var.comp = var.comp
-	res$eff.dim = eff.dim
-	res$dim = dim
-	res$nobs = nobs
-	res$deviance = dev
-	res$coeff = b
-	res$niterations = it
+	res$fitted <- fitted
+	res$residuals <- dev.residuals
+	res$psi <- c(la[1], psi)
+	res$var.comp <- var.comp
+	res$eff.dim <- eff.dim
+	res$dim <- dim
+	res$nobs <- nobs
+	res$deviance <- dev
+	res$coeff <- b
+	res$niterations <- it
 	random.coeff <- rep(FALSE, length(b))
 	random.coeff[create.position.indicator(dim, random.)] <- TRUE
 	attr(res$coeff, "random") <- random.coeff	

@@ -28,7 +28,7 @@ The following graphics are depicted: the raw data, the fitted data (on the respo
 %% ...
 %}
 \references{
-Rodriguez-Alvarez, M.X., Boer, M.P., van Eeuwijk, F.A., and Eilers, P.H.C. (2016). Spatial Models for Field Trials. Available on arXiv at http://arxiv.org/abs/1607.08255.
+Rodriguez-Alvarez, M.X, Boer, M.P., van Eeuwijk, F.A., and Eilers, P.H.C. (2017). Correcting for spatial heterogeneity in plant breeding experiments with P-splines. Spatial Statistics (to appear). https://doi.org/10.1016/j.spasta.2017.10.003.
 }
 %\author{
 %%  ~~who you are~~

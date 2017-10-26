@@ -12,8 +12,8 @@ function(object, newdata = NULL, which = NULL, ...) {
 	model.terms <- c(object$model$geno$genotype, 
 					 object$terms$spatial$terms.formula$x.coord, 
 					 object$terms$spatial$terms.formula$y.coord,
-					 if(!is.null(object$terms$fixed)) attr(object$terms$fixed, "term.labels"),
-					 if(!is.null(object$terms$random)) attr(object$terms$random, "term.labels"))
+					 if(!is.null(object$terms$fixed)) all.vars(object$terms$fixed),
+					 if(!is.null(object$terms$random)) all.vars(object$terms$random))
 	if(!is.null(newdata)) {
 		if(any(!(model.terms %in% names(newdata))))
 			stop("Not all needed variables are supplied in newdata")
@@ -22,12 +22,13 @@ function(object, newdata = NULL, which = NULL, ...) {
 		which <- which[which %in% model.terms]
 		if((object$terms$spatial$terms.formula$x.coord %in% which & !(object$terms$spatial$terms.formula$y.coord%in%which)) | (object$terms$spatial$terms.formula$y.coord %in% which & !(object$terms$spatial$terms.formula$x.coord %in% which)))
 			stop(paste("Both ",object$terms$spatial$terms.formula$x.coord," and ", object$terms$spatial$terms.formula$y.coord," must be supplied in argument which", sep = ""))
+		
 		newdata <- object$data[,which,drop=FALSE]
 		newdata <- newdata[!duplicated(newdata),,drop = FALSE]
 		
-		for(i in model.terms[!model.terms%in%which]) {
+		for(i in model.terms[!model.terms %in% which]) {
 			if(is.factor(object$data[,i])) {
-				if(!is.null(object$terms$fixed) & (i %in% attr(object$terms$fixed, "term.labels"))) {
+				if(!is.null(object$terms$fixed) & (i %in% all.vars(object$terms$fixed))) {
 					newdata[,i] <- attr(object$terms$fixed, "xlev")[[i]][1]
 				} else if (i %in% object$model$geno$genotype & !object$model$geno$as.random) {
 					newdata[,i] <- as.factor(object$terms$geno$geno_names[1])
@@ -44,7 +45,7 @@ function(object, newdata = NULL, which = NULL, ...) {
 	na.terms <- c(object$terms$spatial$terms.formula$x.coord, 
 					 object$terms$spatial$terms.formula$y.coord,
 					 if(!object$model$geno$as.random) object$model$geno$genotype,
-					 if(!is.null(object$terms$fixed)) attr(object$terms$fixed, "term.labels"))
+					 if(!is.null(object$terms$fixed)) all.vars(object$terms$fixed))
 					 
 	na.ind <- apply(is.na(newdata[,na.terms]), 1, any)
 	newdata <- newdata[!na.ind,]
@@ -68,7 +69,7 @@ function(object, newdata = NULL, which = NULL, ...) {
 	# Standard errors
 	standard.errors <- sqrt(rowSums(MMsp%*%object$vcov$C11_inv*MMsp) + rowSums(2*MMsp%*%object$vcov$C12_inv*MMnsp) + rowSums(MMnsp%*%object$vcov$C22_inv*MMnsp))
 	
-	na.terms <- c(if(object$model$geno$as.random) object$model$geno$genotype, if(!is.null(object$terms$random)) attr(object$terms$random, "term.labels"))
+	na.terms <- c(if(object$model$geno$as.random) object$model$geno$genotype, if(!is.null(object$terms$random)) all.vars(object$terms$random))
 	if(!is.null(na.terms)) {
 		for(i in na.terms) {
 			if(sum(is.na(newdata[,i])) == nrow(newdata)) {

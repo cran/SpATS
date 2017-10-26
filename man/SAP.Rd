@@ -73,10 +73,12 @@ m0 <- SpATS(response = "yield", spatial = ~ SAP(col, row, nseg = c(10,20)),
 summary(m0)
 
 # ANOVA decomposition: four smoothing parameters
+\dontrun{
 m1 <- SpATS(response = "yield", spatial = ~ SAP(col, row, nseg = c(10,20), ANOVA = TRUE), 
  genotype = "geno", fixed = ~ colcode + rowcode, random = ~ R + C, data = wheatdata, 
  control =  list(tolerance = 1e-03))
 summary(m1)
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

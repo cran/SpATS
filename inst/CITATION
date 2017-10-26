@@ -1,0 +1,21 @@
+citHeader("To cite SpATS in publications use:")
+
+citEntry(entry = "Article",
+  title        = "Correcting for spatial heterogeneity in plant breeding experiments with P-splines",
+  author       = personList(as.person("Mar{\\'i}a Xos{\\'e} Rodr{\\'i}guez-{\\'A}lvarez"),
+                   as.person("Martin P. Boer"),
+                   as.person("Fred A. van Eeuwijk"),
+                   as.person ("Paul H.C. Eilers")),
+  journal      = "Spatial Statistics",
+  year         = "2017",
+  volume       = "",
+  number       = "",
+  pages        = "",
+  url          = "https://doi.org/10.1016/j.spasta.2017.10.003",
+
+  textVersion  =
+  paste("Maria Xose Rodriguez-Alvarez, Martin P. Boer, Fred A. van Eeuwijk, Paul H.C. Eilers (2017).",
+        "Correcting for spatial heterogeneity in plant breeding experiments with P-splines.",
+        "Spatial Statistics",
+        "URL https://doi.org/10.1016/j.spasta.2017.10.003")
+)

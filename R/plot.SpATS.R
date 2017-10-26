@@ -51,10 +51,12 @@ function(x, all.in.one = TRUE, main = NULL, annotated = FALSE, depict.missing = 
         if(!is.null(main))
             main.legends <- rep(main, length(main.legends))
     }
-    fields::image.plot(columns, rows, t(matrix(df$response, ncol = length(columns), nrow = length(rows))), main = main.legends[1], col = colors, xlab = xlab, ylab = ylab, zlim = range(response, na.rm = TRUE), graphics.reset = TRUE, ...)
+
+    range <- range(c(response, fitted), na.rm = TRUE)
+    fields::image.plot(columns, rows, t(matrix(df$response, ncol = length(columns), nrow = length(rows))), main = main.legends[1], col = colors, xlab = xlab, ylab = ylab, zlim = range, graphics.reset = TRUE, ...)
     if(!all.in.one)
         readline("Press return for next page....")
-    fields::image.plot(columns, rows, t(matrix(df$fitted, ncol = length(columns), nrow = length(rows))), main = main.legends[2], col = colors, xlab = xlab, ylab = ylab, zlim = range(response, na.rm = TRUE), graphics.reset = TRUE, ...)
+    fields::image.plot(columns, rows, t(matrix(df$fitted, ncol = length(columns), nrow = length(rows))), main = main.legends[2], col = colors, xlab = xlab, ylab = ylab, zlim = range, graphics.reset = TRUE, ...)
     if(!all.in.one)
         readline("Press return for next page....")
     fields::image.plot(columns, rows, t(matrix(df$residuals, ncol = length(columns), nrow = length(rows))), main = main.legends[3], col = colors, xlab = xlab, ylab = ylab, graphics.reset = TRUE, ...)
