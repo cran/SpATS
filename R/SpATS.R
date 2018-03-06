@@ -24,6 +24,10 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 	if(inherits(spatial, "character"))
 		spatial <- as.formula(spatial)
 	
+	if(!all(sapply(all.vars(random), function(x, data) is.factor(data[,x]), data = data))) {
+		stop("All variables indicated in argument 'random' should be factors")
+	}
+
 	sf <- interpret.SpATS.formula(spatial)
 	
 	# NAs in the covariates
@@ -102,7 +106,11 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 			obj <- construct.henderson.matrix(mat, la, Ginv, dim, sparse., random., fixed.matrices = if(genotype.as.random) NULL else list(M = M, C21_C11_inv_C12 = C21_C11_inv_C12, M_Xty. = M_Xty.), as.random = genotype.as.random)
 			
 			# Fixed and random effects estimation
-			chol_K = chol(obj$K)
+			chol_K = try(chol(obj$K), silent = TRUE)
+			if(class(chol_K) == "try-error") {
+				stop("The design matrix associated to the fixed part of the model is not of full rank. Please check that there are no redundant components in the fixed part of the model.")	
+			}
+
 			K_inv = chol2inv(chol_K)
 			
 			b.fr <- (1/la[1])*K_inv%*%(mat$Zty. - obj$M_Xty.)

@@ -4,7 +4,7 @@
 Define a two-dimensional penalised tensor-product of marginal B-Spline basis functions.
 }
 \description{
-Auxiliary function used for modelling the spatial or environmental effect as a two-dimensional penalised tensor-product of marginal B-spline basis functions with anisotropic penalties. The approach implemented here corresponds to the Separation of Anisotropic Penalties (SAP) algorithm introduced by Rodriguez-Alvarez et al. (2014). 
+Auxiliary function used for modelling the spatial or environmental effect as a two-dimensional penalised tensor-product of marginal B-spline basis functions with anisotropic penalties. The approach implemented here corresponds to the Separation of Anisotropic Penalties (SAP) algorithm introduced by Rodriguez-Alvarez et al. (2015). 
 }
 \usage{
 SAP(..., nseg = c(10,10), pord = c(2,2), degree = c(3,3), nest.div = c(1,1), 

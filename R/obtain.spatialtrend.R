@@ -19,6 +19,12 @@ function(object, grid = c(100,100), ...) {
 	Z1p <- B1p%*%object$terms$spatial$MM$MM1$U.Z
 	Z2p <- B2p%*%object$terms$spatial$MM$MM2$U.Z
 	
+
+	B1pn <- spline.bbase(object$terms$spatial$MMn$MM1$knots, col.p, terms.formula$degree[1])
+	B2pn <- spline.bbase(object$terms$spatial$MMn$MM2$knots, row.p, terms.formula$degree[2])
+	Z1pn <- B1pn%*%object$terms$spatial$MMn$MM1$U.Z
+	Z2pn <- B2pn%*%object$terms$spatial$MMn$MM2$U.Z
+
 	# Coefficients associated to the spatial component
 	fixed.spat.coef <- object$coeff[object$terms$spatial$fixed$pos]
 	random.spat.coef <- object$coeff[object$terms$spatial$random$pos]
@@ -26,13 +32,9 @@ function(object, grid = c(100,100), ...) {
 	if(terms.formula$type == "SAP") {
 		Xp <- X2p%x%X1p
 		Xp <- Xp[,-1,drop = FALSE]
-		Zp = cbind(X2p%x%Z1p, Z2p%x%X1p, Z2p%x%Z1p)
+		Zp = cbind(X2p%x%Z1p, Z2p%x%X1p, Z2pn%x%Z1pn)
 	} else {
-		B1pn <- spline.bbase(object$terms$spatial$MMn$MM1$knots, col.p, terms.formula$degree[1])
-		B2pn <- spline.bbase(object$terms$spatial$MMn$MM2$knots, row.p, terms.formula$degree[2])
-		Z1pn <- B1pn%*%object$terms$spatial$MMn$MM1$U.Z
-		Z2pn <- B2pn%*%object$terms$spatial$MMn$MM2$U.Z
-
+		
 		Xp <- X2p%x%X1p
 		Xp <- Xp[,-1,drop = FALSE]		
 		

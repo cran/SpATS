@@ -26,12 +26,19 @@ function(object, newdata = NULL, which = NULL, ...) {
 		newdata <- object$data[,which,drop=FALSE]
 		newdata <- newdata[!duplicated(newdata),,drop = FALSE]
 		
+		# Get only the genotypes in the sample
+		if(object$model$geno$genotype %in% which) {
+			geno.in.sample <- object$terms$geno$geno_names[object$terms$geno$ndx]
+			ind.geno <- newdata[,object$model$geno$genotype] %in% geno.in.sample
+			newdata <- newdata[ind.geno,,drop = FALSE]
+		}
+
 		for(i in model.terms[!model.terms %in% which]) {
 			if(is.factor(object$data[,i])) {
 				if(!is.null(object$terms$fixed) & (i %in% all.vars(object$terms$fixed))) {
 					newdata[,i] <- attr(object$terms$fixed, "xlev")[[i]][1]
 				} else if (i %in% object$model$geno$genotype & !object$model$geno$as.random) {
-					newdata[,i] <- as.factor(object$terms$geno$geno_names[1])
+					newdata[,i] <- as.factor(object$terms$geno$geno_names[object$terms$geno$ndx[1]]) # Reference
 				} else {
 					newdata[,i] <- as.factor(NA)
 				}
