@@ -1,8 +1,8 @@
 Package: SpATS
 Type: Package
 Title: Spatial Analysis of Field Trials with Splines
-Version: 1.0-7
-Date: 2018-03-06
+Version: 1.0-8
+Date: 2018-05-29
 Authors@R: c(
 	person("Maria Xose Rodriguez-Alvarez",
 		email = "mxrodriguez@bcamath.org", role = c("aut", "cre")),
@@ -14,11 +14,11 @@ Imports: stats, grDevices, graphics, fields, plot3Drgl, spam,
 Description: Analysis of field trial experiments by modelling spatial trends using two-dimensional Penalised spline (P-spline) models.
 License: GPL
 NeedsCompilation: no
-Packaged: 2018-03-05 20:41:31 UTC; mrodriguez
+Packaged: 2018-05-29 16:57:35 UTC; mrodriguez
 Author: Maria Xose Rodriguez-Alvarez [aut, cre],
   Martin Boer [aut],
   Paul Eilers [aut],
   Fred van Eeuwijk [ctb]
 Maintainer: Maria Xose Rodriguez-Alvarez <mxrodriguez@bcamath.org>
 Repository: CRAN
-Date/Publication: 2018-03-06 09:16:34 UTC
+Date/Publication: 2018-05-30 18:36:06 UTC

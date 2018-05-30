@@ -13,6 +13,12 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
         stop("'family' not recognized")
     }
 
+    if (inherits(data, what = 'data.frame')) {
+		data <- as.data.frame(data)
+	} else {
+		stop("The object specified in argument 'data' is not a data frame")
+	}
+	
 	weights <- as.vector(weights)
 	if(is.null(weights)) weights = rep(1, nrow(data))
 	if(length(offset) == 1) offset <- rep(offset, nrow(data))

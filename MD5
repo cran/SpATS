@@ -1,11 +1,12 @@
-e614270a9cd246f9c5481d0f53b3e513 *DESCRIPTION
+fca671bdf0ce6f226e946ab938ff0e6d *DESCRIPTION
 ce2f14e2e83548ee2c8e288dea0a93f5 *NAMESPACE
+2b4a2e46c3648197d84f62e6dc0e973a *NEWS
 6cd364c3d46456c22f8db11d81823145 *R/MM.basis.R
 c2246616375a81e7cab53278ffeb886e *R/PSANOVA.R
 88a8b88495a9a1c03bf7b0de97a6dc3b *R/Rten.R
 d817beb437c4b86b069e5f08497ae03c *R/Rten2.R
 642882265ccdf12ca863b21be54c5623 *R/SAP.R
-2daef9cb8ed01b45b0f161e49f48bfb4 *R/SpATS.R
+189a3954fe0e9cbfb3281bdfa0e75124 *R/SpATS.R
 ae91da19ac81277d26b5df60403058b9 *R/bbase.R
 49b3ea948cba6b67a70db840afbe33ff *R/compute.hat.diagonal.R
 c5913c633269ec46a75431735f9421c0 *R/construct.2d.pspline.R
@@ -31,7 +32,7 @@ a66021f66bd8fa6226b7aa2f4d3fe42d *R/get.attribute.R
 057b70e4c7b1e8b1661740d007388814 *R/interpret.SpATS.formula.R
 4892e5e849a2ea506a0def9749dafc8e *R/make_design_matrix.R
 45b0a28e0d5760f6c35c6c40f4477b8e *R/obtain.spatialtrend.R
-19e611a7c6e569dc07fd8a2e065afd95 *R/plot.SpATS.R
+a3b99a9e2e6ea1f75db7b3fe676d1f9d *R/plot.SpATS.R
 80a70ab32b5305c8f19ec053bd16565f *R/plot.variogram.SpATS.R
 38f90f1c4a0567d58e356444c4d327e7 *R/predict.SpATS.R
 a2cb10f9249a2336e1aa13899eff98c3 *R/print.SpATS.R
@@ -45,7 +46,7 @@ b310b06da1994f9bf19afbc1d8736a05 *R/summary.SpATS.R
 7010adf7a8b9f366cb786e4f16d2dd25 *inst/CITATION
 ae216fc1f9feea6a402e8c8f1a61b260 *man/PSANOVA.Rd
 484e31223aa150b67435b4ce3201c824 *man/SAP.Rd
-0cac210550ab2efc0daeba281d16a80d *man/SpATS-package.Rd
+ad1ec1152f6ead13fd8f01aa89068b52 *man/SpATS-package.Rd
 0ce91c603e1dfb6e9ce4ff5450ebdc9b *man/SpATS.Rd
 308c9b043c402420dac23c2e2a8068d6 *man/controlSpATS.Rd
 3793a56745fb10116affea5691933f56 *man/getHeritability.Rd

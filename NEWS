@@ -1,0 +1,5 @@
+	CHANGES in `SpATS' VERSION 1.0-8
+		
+	o	The input argument 'data' can be an object of class 'data.table' or 'is.tibble'
+
+
