@@ -40,7 +40,7 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 	model.terms <- c(sf$x.coord, sf$y.coord, if(genotype.as.random) geno.decomp else genotype, if(!is.null(fixed)) all.vars(fixed))
 	na.ind <- apply(is.na(data[,model.terms]), 1, any)
 	na.pos <- (1:nrow(data))[!na.ind]
-	weights = weights*(!na.ind)*(!is.na(data[,response]))
+	weights <- weights*(!na.ind)*(!is.na(data[,response]))
 
 	data.na <- data[!na.ind,]
 	weights.na <- weights[!na.ind]
@@ -59,6 +59,9 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 	sparse. <- unlist(lapply(ldim, get.attribute, "sparse"))
 	spatial. <- unlist(lapply(ldim, get.attribute, "spatial"))
 	dim <- unlist(ldim)
+
+	# Nominal dimension
+	dim.nom <- obtain.nominal.dimension(cbind(MM$MM$MMs, MM$MM$MMns), dim, random., spatial., weights.na)
 	g <- MM$g
 	
 	random.pos <- create.position.indicator(dim, random.)	
@@ -75,10 +78,10 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 	eta <- family$linkfun(mustart)
 
 	# Initialize variance components
-	la = c(1, unlist(MM$init.var))
+	la <- c(1, unlist(MM$init.var))
 	# Initialize deviance and psi
-	devold = 1e10
-	psi = la[1]
+	devold <- 1e10
+	psi <- la[1]
 	if(control$monitoring > 1) {
 		cat("Effective dimensions\n")
 		cat("-------------------------\n")
@@ -107,17 +110,17 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 			for (i in 1:length(g)) {
 				Ginv <- Ginv + (1/la[i+1])*g[[i]]
 			}
-			G = 1/Ginv
+			G <- 1/Ginv
 			
 			obj <- construct.henderson.matrix(mat, la, Ginv, dim, sparse., random., fixed.matrices = if(genotype.as.random) NULL else list(M = M, C21_C11_inv_C12 = C21_C11_inv_C12, M_Xty. = M_Xty.), as.random = genotype.as.random)
 			
 			# Fixed and random effects estimation
-			chol_K = try(chol(obj$K), silent = TRUE)
+			chol_K <- try(chol(obj$K), silent = TRUE)
 			if(class(chol_K) == "try-error") {
 				stop("The design matrix associated to the fixed part of the model is not of full rank. Please check that there are no redundant components in the fixed part of the model.")	
 			}
 
-			K_inv = chol2inv(chol_K)
+			K_inv <- chol2inv(chol_K)
 			
 			b.fr <- (1/la[1])*K_inv%*%(mat$Zty. - obj$M_Xty.)
 			b.fr <- as.vector(b.fr)
@@ -141,7 +144,7 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 				tau[[i]] <- ifelse(tau[[i]] == 0, 1e-50, tau[[i]])
 			}
 			#ssr = sum(((z - cbind(MMs, MMns)%*%b)*sqrt(w))^2) #yty. - t(b)%*%(2*u - V%*%b)
-			ssr = sum(((z - MMs %*% b.geno - MMns %*% b.fr)*sqrt(w))^2) #yty. - t(b)%*%(2*u - V%*%b)
+			ssr <- sum(((z - MMs %*% b.geno - MMns %*% b.fr)*sqrt(w))^2) #yty. - t(b)%*%(2*u - V%*%b)
 			# Compute deviance
 			dev <- deviance(obj$C11, chol_K, G, w[w != 0], la[1], ssr, sum(b.random^2*Ginv))
 			psinew <- as.numeric((ssr/(nobs - sum(unlist(ed)) - df.fixed)))
@@ -152,16 +155,16 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 			}
 			# New variance components and convergence check
 			lanew <- c(psi2, unlist(tau))
-			dla = abs(devold - dev)
+			dla <- abs(devold - dev)
 			if(control$monitoring > 1) {
 				cat(sprintf("%1$3d %2$12.6f", it, dev), sep = "")
 				cat(sprintf("%12.3f", unlist(ed)), sep = "")
 				cat('\n')
 			}
 			if (dla < control$tolerance) break
-			la = lanew
-			psi = psinew
-			devold = dev
+			la <- lanew
+			psi <- psinew
+			devold <- dev
 		}
 		if (control$monitoring) {
 			end1 <- proc.time()[3]
@@ -218,6 +221,7 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 	res$var.comp <- var.comp
 	res$eff.dim <- eff.dim
 	res$dim <- dim
+	res$dim.nom <- dim.nom 
 	res$nobs <- nobs
 	res$deviance <- dev
 	res$coeff <- b

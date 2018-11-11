@@ -11,7 +11,8 @@ getHeritability <- function(object, ...) {
 		dim <- object$dim[select]
 	}
 
-	ed.geno <- object$eff.dim[select]/(dim - 1)
+	#ed.geno <- object$eff.dim[select]/(dim - 1)
+	ed.geno <- object$eff.dim[select]/object$dim.nom[select]
 	names(ed.geno) <- select
 	res <- round(ed.geno, 2)
 	res

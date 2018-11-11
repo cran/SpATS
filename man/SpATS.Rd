@@ -40,6 +40,7 @@ A list with the following components:
 \item{var.comp}{a numeric vector with the (REML) variance component estimates. These vector contains the variance components associated with the spatial trend, as well as those related with the random model terms.}
 \item{eff.dim}{a numeric vector with the estimated effective dimension (or effective degrees of freedom) for each model component (genotype, spatial, fixed and/or random)}
 \item{dim}{a numeric vector with the (model) dimension of each model component (genotype, spatial, fixed and/or random). This value corresponds to the number of parameters to be estimated}
+\item{dim.nom}{a numeric vector with the (nominal) dimension of each component (genotype, spatial, fixed and/or random). For the random terms of the model, this value corresponds to upper bound for the effective dimension (i.e., the maximum effective dimension a random term can achive). This nominal dimension is \eqn{rank[X, Z_k] - rank[X]}, where \eqn{Z_k} is the design matrix of the k-th random factor and \eqn{X} is the design matrix of the fixed part of the model. In most cases (but not always), the nominal dimension corresponds to the model dimension minus one, ``lost'' due to the implicit constraint that ensures the mean of the random effects to be zero.}
 \item{nobs}{number of observations used to fit the model}
 \item{niterations}{number of iterations EM-algorithm}
 \item{deviance}{the (REML) deviance at convergence (i.e., - 0.5 times the restricted log-likelihood)}

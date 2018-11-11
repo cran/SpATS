@@ -16,11 +16,14 @@ function(object, which = c("dimensions", "variances", "all"), ...) {
 	# Dimensions	
 	eff.dim <- object$eff.dim
 	dim <- object$dim
+	dim.nom <- object$dim.nom
 
 	tot_ed <- sum(eff.dim, na.rm = TRUE)
 	tot_dim <- sum(dim, na.rm = TRUE)
 
 	dim.new <- dim[match(names(eff.dim), names(dim))]
+	dim.nom <- dim.nom[match(names(eff.dim), names(dim.nom))]
+
 	type <- rep(NA, length = length(dim.new))
 	type[(attr(dim, "random") & !attr(dim, "spatial"))[match(names(eff.dim), names(dim))]] <- "R"
 	type[(!attr(dim, "random") & !attr(dim, "spatial"))[match(names(eff.dim), names(dim))]] <- "F"
@@ -38,11 +41,12 @@ function(object, which = c("dimensions", "variances", "all"), ...) {
 	ord <- c(which(type == "F"), which(type == "R"), which(type == "S"))
 	eff.dim.new <- eff.dim.new[ord]
 	dim.new <- dim.new[ord]
+	dim.nom <- dim.nom[ord]
 	model <- model[ord]
 	type <- type[ord]
 		
-	dim.nom <- dim.new
-	dim.nom[type == "R"] <- dim.nom[type == "R"] - 1
+	#dim.nom <- dim.new
+	#dim.nom[type == "R"] <- dim.nom[type == "R"] - 1
 
 	nterms <- length(eff.dim.new)
 	model <- names(eff.dim.new)
