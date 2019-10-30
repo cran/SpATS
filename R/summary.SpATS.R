@@ -33,6 +33,7 @@ function(object, which = c("dimensions", "variances", "all"), ...) {
 	smooth.comp <- attr(object$terms$spatial, "term")
 	if(paste(smooth.comp, "Global") %in% names(dim)) {
 		dim.new <- c(dim.new, dim[paste(smooth.comp, "Global")])
+		dim.nom <- c(dim.nom, dim[paste(smooth.comp, "Global")])
 		eff.dim.new <- c(eff.dim.new, sum(eff.dim.new[grep(smooth.comp, names(eff.dim.new), fixed = TRUE)]))
 		names(eff.dim.new)[length(eff.dim.new)] <- paste(smooth.comp, "Global")
 		type <- c(type, "S")

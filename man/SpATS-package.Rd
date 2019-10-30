@@ -11,8 +11,8 @@ This package allows the use of two-dimensional (2D) penalised splines (P-splines
 \tabular{ll}{
 Package: \tab SpATS\cr
 Type: \tab Package\cr
-Version: \tab 1.0-9\cr
-Date: \tab 2018-11-10\cr
+Version: \tab 1.0-10\cr
+Date: \tab 2019-10-29\cr
 License: \tab GPL\cr
 }
 }

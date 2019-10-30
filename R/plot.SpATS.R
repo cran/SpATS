@@ -1,5 +1,7 @@
 plot.SpATS <-
-function(x, all.in.one = TRUE, main = NULL, annotated = FALSE, depict.missing = FALSE, ...) {
+function(x, all.in.one = TRUE, main = NULL, annotated = FALSE, depict.missing = FALSE, spaTrend = c("raw", "percentage"), ...) {
+    spaTrend <- match.arg(spaTrend)
+
     xlab <- x$terms$spatial$terms.formula$x.coord
     ylab <- x$terms$spatial$terms.formula$y.coord
     x.coord <- x$data[,xlab]
@@ -10,6 +12,9 @@ function(x, all.in.one = TRUE, main = NULL, annotated = FALSE, depict.missing = 
     geno.model.matrix <- construct.genotype.prediction.matrix(x, x$data)
     geno.coeff <- x$coeff[1:ncol(geno.model.matrix)]
     geno.pred <- as.vector(geno.model.matrix%*%geno.coeff)
+    
+    # Extra arguments
+    dots <- list(...)
     
     # NAs
     residuals[x$data$weights == 0] <- NA
@@ -40,7 +45,7 @@ function(x, all.in.one = TRUE, main = NULL, annotated = FALSE, depict.missing = 
     p2 <- if(length(rows) > 100) 1 else 100%/%length(rows) + 1
 
     fit.spatial.trend <- obtain.spatialtrend(x, grid = c(length(columns)*p1, length(rows)*p2))
-    Mf = kronecker(matrix(df$ONE, ncol = length(columns), nrow = length(rows)), matrix(1, p2, p1))
+    Mf <- kronecker(matrix(df$ONE, ncol = length(columns), nrow = length(rows)), matrix(1, p2, p1))
     
     colors = topo.colors(100)
     
@@ -52,20 +57,33 @@ function(x, all.in.one = TRUE, main = NULL, annotated = FALSE, depict.missing = 
             main.legends <- rep(main, length(main.legends))
     }
 
+    if(spaTrend == "raw") {
+        spatial.trend <- fit.spatial.trend$fit
+    } else {
+        spatial.trend <- (fit.spatial.trend$fit/mean(response, na.rm = TRUE))*100
+    }
     range <- range(c(response, fitted), na.rm = TRUE)
-    fields::image.plot(columns, rows, t(matrix(df$response, ncol = length(columns), nrow = length(rows))), main = main.legends[1], col = colors, xlab = xlab, ylab = ylab, zlim = range, graphics.reset = TRUE, ...)
+    fields::image.plot(columns, rows, t(matrix(df$response, ncol = length(columns), nrow = length(rows))), main = main.legends[1], col = colors, xlab = xlab, ylab = ylab, zlim = range, graphics.reset = TRUE)
     if(!all.in.one)
         readline("Press return for next page....")
-    fields::image.plot(columns, rows, t(matrix(df$fitted, ncol = length(columns), nrow = length(rows))), main = main.legends[2], col = colors, xlab = xlab, ylab = ylab, zlim = range, graphics.reset = TRUE, ...)
+    fields::image.plot(columns, rows, t(matrix(df$fitted, ncol = length(columns), nrow = length(rows))), main = main.legends[2], col = colors, xlab = xlab, ylab = ylab, zlim = range, graphics.reset = TRUE)
     if(!all.in.one)
         readline("Press return for next page....")
-    fields::image.plot(columns, rows, t(matrix(df$residuals, ncol = length(columns), nrow = length(rows))), main = main.legends[3], col = colors, xlab = xlab, ylab = ylab, graphics.reset = TRUE, ...)
+    fields::image.plot(columns, rows, t(matrix(df$residuals, ncol = length(columns), nrow = length(rows))), main = main.legends[3], col = colors, xlab = xlab, ylab = ylab, graphics.reset = TRUE)
     if(!all.in.one)
         readline("Press return for next page....")
-    fields::image.plot(fit.spatial.trend$col.p, fit.spatial.trend$row.p, t(fit.spatial.trend$fit*Mf), main = main.legends[4], col = colors, xlab = xlab, ylab = ylab, graphics.reset = TRUE, ...)
+    if(spaTrend == "raw") {
+        fields::image.plot(fit.spatial.trend$col.p, fit.spatial.trend$row.p, t(spatial.trend*Mf), main = main.legends[4], col = colors, xlab = xlab, ylab = ylab, graphics.reset = TRUE, zlim = if(!is.null(dots$zlim)) dots$zlim else range(spatial.trend))
+    } else {
+        range.spat.trend <- c(range(spatial.trend), if(!is.null(dots$zlim)) dots$zlim else range(spatial.trend)) 
+        fields::image.plot(fit.spatial.trend$col.p, fit.spatial.trend$row.p, t(spatial.trend*Mf), main = main.legends[4], 
+            col = colorRampPalette(c("red", "yellow", "blue"), space = "Lab")(100), 
+            xlab = xlab, ylab = ylab, graphics.reset = TRUE, zlim = if(!is.null(dots$zlim)) dots$zlim else range(spatial.trend),
+            axis.args = list(at = pretty(range.spat.trend), labels = paste0(sprintf("%.2f", pretty(range.spat.trend)), "%")))
+    }
     if(!all.in.one)
         readline("Press return for next page....")
-    fields::image.plot(columns, rows, t(matrix(df$geno.pred, ncol = length(columns), nrow = length(rows))), main = main.legends[5], col = colors, xlab = xlab, ylab = ylab, graphics.reset = TRUE, ...)
+    fields::image.plot(columns, rows, t(matrix(df$geno.pred, ncol = length(columns), nrow = length(rows))), main = main.legends[5], col = colors, xlab = xlab, ylab = ylab, graphics.reset = TRUE)
     if(!all.in.one)
         readline("Press return for next page....")
     suppressWarnings(hist(geno.coeff, main = main.legends[6], xlab = main.legends[5], ...))        

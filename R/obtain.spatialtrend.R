@@ -28,16 +28,17 @@ function(object, grid = c(100,100), ...) {
 	# Coefficients associated to the spatial component
 	fixed.spat.coef <- object$coeff[object$terms$spatial$fixed$pos]
 	random.spat.coef <- object$coeff[object$terms$spatial$random$pos]
+
+	# Parametric component (Bilinear component)
+	Xp <- X2p%x%X1p
+	Xp <- Xp[,-1,drop = FALSE]
+	
+	eta0 <- matrix(Xp%*%fixed.spat.coef, nrow = length(row.p), ncol = length(col.p), byrow = TRUE)
 	
 	if(terms.formula$type == "SAP") {
-		Xp <- X2p%x%X1p
-		Xp <- Xp[,-1,drop = FALSE]
-		Zp = cbind(X2p%x%Z1p, Z2p%x%X1p, Z2pn%x%Z1pn)
-	} else {
-		
-		Xp <- X2p%x%X1p
-		Xp <- Xp[,-1,drop = FALSE]		
-		
+		Zp <- cbind(X2p%x%Z1p, Z2p%x%X1p, Z2pn%x%Z1pn)
+		eta1 <- matrix(Zp%*%random.spat.coef, nrow = length(row.p), ncol = length(col.p), byrow = TRUE)
+	} else {		
 		# Separate for each PS-ANOVA component
 		Zp1 <- X2p[,1, drop = FALSE]%x%Z1p
 		Zp2 <- Z2p%x%X1p[,1, drop = FALSE]
@@ -63,7 +64,10 @@ function(object, grid = c(100,100), ...) {
 	}
 	eta <- cbind(Xp,Zp)%*%c(fixed.spat.coef, random.spat.coef)
 	res <- list(col.p = col.p, row.p = row.p, fit = matrix(eta, nrow = length(row.p), ncol = length(col.p), byrow = TRUE))
-	if (terms.formula$type != "SAP")
-		res$pfit <- list(fv = eta1, fu = eta2, uhv = eta3, vhu = eta4, fuv = eta5)
+	if (terms.formula$type == "SAP") {
+		res$pfit <- list(bc = eta0, sc = eta1)
+	} else {
+		res$pfit <- list(bc = eta0, fv = eta1, fu = eta2, uhv = eta3, vhu = eta4, fuv = eta5)
+	}
 	res
 }

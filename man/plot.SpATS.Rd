@@ -7,7 +7,8 @@ Default SpATS plotting
 Takes a fitted \code{SpATS} object produced by \code{SpATS()} and plots six different graphics (see Details).
 }
 \usage{
-\method{plot}{SpATS}(x, all.in.one = TRUE, main = NULL, annotated = FALSE, depict.missing = FALSE, ...)
+\method{plot}{SpATS}(x, all.in.one = TRUE, main = NULL, annotated = FALSE, 
+	depict.missing = FALSE, spaTrend = c("raw", "percentage"), ...)
 }
 \arguments{
 	\item{x}{an object of class \code{SpATS} as produced by \code{SpATS()}.}
@@ -15,10 +16,11 @@ Takes a fitted \code{SpATS} object produced by \code{SpATS()} and plots six diff
 	\item{main}{character string specifying the main title to appear on the plot. By default (i.e. when main = NULL), the variable under study is incorporated in the title of the plot.}
 	\item{annotated}{logical. If TRUE, the variable under study and the models used is added to the plot. Only applied when argument \code{all.in.one} is TRUE.}
 	\item{depict.missing}{logical. If TRUE, the estimated spatial trend is depicted for all plots in the field, even for those with missing values.}
+	\item{spaTrend}{a character string indicating how the spatial trend should be displayed. Either "raw" (original scale), or "percentage". If 'percentage', the estimated spatial trend is scaled (i.e., divided by the average of the observed response variable of interest across the field) and results are shown as a percentage.}
 	\item{\dots}{further arguments passed to or from other methods. Not yet implemented.}
 }
 \details{
-The following graphics are depicted: the raw data, the fitted data (on the response scale), the (deviance) residuals, the estimated spatial trend (excluding the intercept), the genotypic BLUEs (or BLUPs) and their histogram. Except for the histogram, the plots are depicted in terms of the spatial coordinates (e.g., the rows and columns of the field).  
+The following graphics are depicted: the raw data, the fitted data (on the response scale), the (deviance) residuals, the (original scaler or in percentage) estimated spatial trend (excluding the intercept), the genotypic BLUEs (or BLUPs) and their histogram. Except for the histogram, the plots are depicted in terms of the spatial coordinates (e.g., the rows and columns of the field).  
 }
 %\value{
 %%  ~Describe the value returned
