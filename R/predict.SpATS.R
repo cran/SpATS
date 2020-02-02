@@ -1,5 +1,5 @@
 predict.SpATS <-
-function(object, newdata = NULL, which = NULL, predFixed = c("conditional", "marginal"), ...) {
+function(object, newdata = NULL, which = NULL, predFixed = c("conditional", "marginal"), return.vcov.matrix = FALSE, ...) {
 
 	# Extra arguments
     dots <- list(...)
@@ -123,9 +123,17 @@ function(object, newdata = NULL, which = NULL, predFixed = c("conditional", "mar
 	
 	# Predicted values
 	predicted.values <- as.vector(cbind.spam(MMsp, MMnsp)%*%as.vector(object$coeff))
+	
 	# Standard errors
 	standard.errors <- sqrt(rowSums(MMsp%*%object$vcov$C11_inv*MMsp) + rowSums(2*MMsp%*%object$vcov$C12_inv*MMnsp) + rowSums(MMnsp%*%object$vcov$C22_inv*MMnsp))
 	
+	# vcov matrix
+	if(return.vcov.matrix) {
+		ds <- cbind.spam(MMsp, MMnsp)
+		V <- rbind(cbind(object$vcov$C11_inv, object$vcov$C12_inv), cbind(t(object$vcov$C12_inv), object$vcov$C22_inv))
+		vcov <- ds%*%V%*%t(ds)
+	}
+
 	na.terms <- c(if(object$model$geno$as.random) object$model$geno$genotype, if(!is.null(object$terms$random)) all.vars(object$terms$random))
 	if(!is.null(na.terms)) {
 		for(i in na.terms) {
@@ -156,5 +164,8 @@ function(object, newdata = NULL, which = NULL, predFixed = c("conditional", "mar
 	res <- newdata
 	res$predicted.values <- predicted.values
 	res$standard.errors <- standard.errors
+	if(return.vcov.matrix) {
+		attr(res, "vcov") <- vcov
+	}
 	res	
 }

@@ -33,6 +33,9 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 	if(!all(sapply(all.vars(random), function(x, data) is.factor(data[,x]), data = data))) {
 		stop("All variables indicated in argument 'random' should be factors")
 	}
+	if(any(sapply(all.vars(fixed), function(x, data) is.character(data[,x]), data = data))) {
+		stop("Variables indicated in argument 'fixed' cannot be characters")
+	}
 
 	sf <- interpret.SpATS.formula(spatial)
 	
@@ -116,7 +119,7 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 			
 			# Fixed and random effects estimation
 			chol_K <- try(chol(obj$K), silent = TRUE)
-			if(class(chol_K) == "try-error") {
+			if(inherits(chol_K, "try-error")) {
 				stop("The design matrix associated to the fixed part of the model is not of full rank. Please check that there are no redundant components in the fixed part of the model.")	
 			}
 

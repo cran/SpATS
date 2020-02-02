@@ -8,13 +8,14 @@ Takes a fitted \code{SpATS} object produced by \code{SpATS()} and produces predi
 }
 \usage{
 \method{predict}{SpATS}(object, newdata = NULL, which = NULL, 
-	predFixed = c("conditional", "marginal"), ...)
+	predFixed = c("conditional", "marginal"), return.vcov.matrix = FALSE, ...)
 }
 \arguments{
   \item{object}{an object of class \code{SpATS} as produced by \code{SpATS()}.}
   \item{newdata}{an optional data frame to be used for obtaining the predictions.}
   \item{which}{an optional character string with the variables that define the margins of the multiway table to be predicted (see Details).}
   \item{predFixed}{a character string indicating how predictions for fixed factor are computed. Either "conditional" or "marginal" (see Details).}
+  \item{return.vcov.matrix}{logical. If TRUE, the variance-covariance matrix for the predictions is returned.}
   \item{\dots}{further arguments passed to or from other methods. Not yet implemented.}
 }
 \details{
