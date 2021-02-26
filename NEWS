@@ -6,8 +6,12 @@
 
 	o	The way of calculating the nominal dimension associated to each random term in the model has been corrected. The nominal dimension corresponds to the upper bound for the effective dimension (i.e., the maximum effective dimension a random term can achive). This nominal dimension is now calculated as \eqn{rank[X, Z_k] - rank[X]}, where \eqn{Z_k} is the design matrix of the k-th random term and \eqn{X} is the design matrix of the fixed part of the model. In most cases (but not always), the nominal dimension corresponds to the model dimension minus one, ``lost'' due to the implicit constraint that ensures the mean of the random effects to be zero. For the genotype (when random), the ratio between the effective dimension and the nominal dimension corresponds to the generalized heritability proposed by Oakey (2006). A deeper discussion can be found in Rodriguez - Alvarez et al. (2018).
 
-	CHANGES in `SpATS' VERSION 1.0-10
+	CHANGES in `SpATS' VERSION 1.0-11
 
 	o	The plot function now allows the fitted spatial trend to be depicted either in the original scale (raw) or as a percentage of the (average) observed response variable of interest across the field.
-	o	Predictions for fixed factor effects can now be obtained conditional on the reference value (predFixed = "conditional"), or averaging over all levels of the fixed factor (predFixed = "marginal"). For compatibility with previous versions of SpATS, by default predictions are obtained conditional on the reference value. 
+	o	Predictions for fixed factor effects can now be obtained conditional on the reference value (predFixed = "conditional"), or averaging over all levels of the fixed factor (predFixed = "marginal"). For compatibility with previous versions of SpATS, by default predictions are obtained conditional on the reference value.
+
+
+	CHANGES in `SpATS' VERSION 1.0-12
+	o	The controlSpATS function has now a new argument which allows the dispersion parameter for the Gaussian family to not be estimated (it is fixed at 1).
 

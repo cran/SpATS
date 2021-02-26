@@ -7,14 +7,16 @@ Used to set various parameters controlling the fitting process
 This function can be used to modify some default parameters that control the estimation of an SpATS model.
 }
 \usage{
-controlSpATS(maxit = 200, tolerance = 0.001, monitoring = 2, update.psi = FALSE)
+controlSpATS(maxit = 200, tolerance = 0.001, monitoring = 2, update.psi = FALSE, 
+	update.psi.gauss = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{maxit}{numerical value indicating the maximum number of iterations. Default set to 200 (see Details).}
   \item{tolerance}{numerical value indicating the tolerance for the convergence criterion. Default set to 0.001 (see Details).}
   \item{monitoring}{numerical value determining the level of printing which is done during the estimation. The value of 0 means that no printing is produced, a value of 1 means that only the computing times are printed, and a value of 2 means that, at each iteration, the (REML) deviance and the effective dimensions of the random components are printed. Default set to 2.}
-  \item{update.psi}{logical. If TRUE, the dispersion parameter of the exponential family is updated at each iteration of the estimation algorithm. Default is FALSE, except for \code{family = gaussian()}, where the dispersion parameter (or residual variance), is always updated jointly with the rest of variance components.}
+  \item{update.psi}{logical. If TRUE, the dispersion parameter of the exponential family is updated at each iteration of the estimation algorithm. Default is FALSE, except for \code{family = gaussian()}, where the dispersion parameter (or residual variance), is updated (jointly with the rest of variance components) unless \code{update.psi.gauss} is set to FALSE.}
+  \item{update.psi.gauss}{logical. Only applies to \code{family = gaussian()}. If set to FALSE (default is TRUE) the residual variance is not updated at each iteration of the estimation algorithm but fixed at 1.}
 }
 \details{
 The estimation procedure implemented in the SpATS package is an extension of the SAP (Separation of anisotropic penalties) algorithm by Rodriguez - Alvarez et al. (2015). In this case, besides the spatial trend, modelled as a two-dimensional P-spline, the estimation algorithm allows for the incorporation of both fixed and (sets of i.i.d) random effects on the (generalised) linear mixed model. 

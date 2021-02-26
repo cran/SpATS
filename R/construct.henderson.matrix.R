@@ -17,12 +17,12 @@ function(mat, la, Ginv, dim, sparse., random., fixed.matrices = NULL, as.random 
 		C22 <- (1/la[1])*t(mat$ZtZ.) + diag(Ginvns)
 		C21 <- (1/la[1])*mat$ZtX.
 	}
-	A = C11
-	A_inv = 1.0/A
+	A <- C11
+	A_inv <- 1.0/A
 	if(is.null(fixed.matrices) | is.null(fixed.matrices$M))
-		M = t(A_inv%*%t(C21))
+		M <- t(A_inv%*%t(C21))
 	else
-		M = fixed.matrices$M
+		M <- fixed.matrices$M
 		
 	if(is.null(fixed.matrices) | is.null(fixed.matrices$C21_C11_inv_C12))
 		K <- C22 - M%*%C12

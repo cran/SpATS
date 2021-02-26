@@ -43,7 +43,7 @@ A list with the following components:
 \item{dim.nom}{a numeric vector with the (nominal) dimension of each component (genotype, spatial, fixed and/or random). For the random terms of the model, this value corresponds to upper bound for the effective dimension (i.e., the maximum effective dimension a random term can achive). This nominal dimension is \eqn{rank[X, Z_k] - rank[X]}, where \eqn{Z_k} is the design matrix of the k-th random factor and \eqn{X} is the design matrix of the fixed part of the model. In most cases (but not always), the nominal dimension corresponds to the model dimension minus one, ``lost'' due to the implicit constraint that ensures the mean of the random effects to be zero.}
 \item{nobs}{number of observations used to fit the model}
 \item{niterations}{number of iterations EM-algorithm}
-\item{deviance}{the (REML) deviance at convergence (i.e., - 0.5 times the restricted log-likelihood)}
+\item{deviance}{the (REML) deviance at convergence (i.e., - 2 times the restricted log-likelihood)}
 \item{coeff}{a numeric vector with the estimated fixed and random effect coefficients.}
 \item{terms}{a list with the model terms: response, spatial, genotype, fixed and/or random. The information provided here is useful for printing and prediction purposes.}
 \item{vcov}{inverse of the coefficient matrix of the mixed models equations. The inverse is needed for the computation of standard errors. For computational issues, the inverse is returned as a list: C11_inv corresponds to the coefficient matrix associated with the genotype; C22_inv corresponds to the coefficient matrix associated with the spatial, the fixed and the random components; and C12_inv and C21_inv correspond to the ``combination'' of both.}

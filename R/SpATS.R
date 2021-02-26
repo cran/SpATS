@@ -151,7 +151,7 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 			# Compute deviance
 			dev <- deviance(obj$C11, chol_K, G, w[w != 0], la[1], ssr, sum(b.random^2*Ginv))
 			psinew <- as.numeric((ssr/(nobs - sum(unlist(ed)) - df.fixed)))
-			if(family$family == "gaussian" | control$update.psi) {
+			if((family$family == "gaussian" & control$update.psi.gauss) | control$update.psi) {
 				psi2 <- psinew
 			} else {
 				psi2 <- 1

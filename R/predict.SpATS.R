@@ -57,7 +57,11 @@ function(object, newdata = NULL, which = NULL, predFixed = c("conditional", "mar
 				newdata[,i] <- mean(object$data[,i], na.rm = TRUE)
 			}
 		}
-		newdata <- newdata[order(newdata[,which]),]						
+		if(length(which) == 1) {
+			newdata <- newdata[order(newdata[,which]),]
+		} else {		
+			newdata <- newdata[do.call(order, newdata[,which]),]
+		}
 	}
 	# NAs in the covariates: allowed in the random part, as well as the genotype when random
 	na.terms <- c(object$terms$spatial$terms.formula$x.coord, 
