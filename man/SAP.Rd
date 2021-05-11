@@ -8,7 +8,7 @@ Auxiliary function used for modelling the spatial or environmental effect as a t
 }
 \usage{
 SAP(..., nseg = c(10,10), pord = c(2,2), degree = c(3,3), nest.div = c(1,1), 
-ANOVA = FALSE)
+	ANOVA = FALSE, center = FALSE)
 }
 \arguments{
   \item{\dots}{a list of the covariates that this smooth component is a function of. Currently, only two-dimensional tensor-product smoothers are implemented: the first covariate is assumed to define the x-spatial coordinate (e.g., column position) of each plot in the field, and the second argument the y-spatial coordinate (i.e., the row position). Both covariates should be numerical.}
@@ -17,6 +17,7 @@ ANOVA = FALSE)
   \item{degree}{numerical vector of length 2 containing the order of the polynomial of the B-spline basis for each marginal. Atomic values are also valid, being recycled. Default set to 3 (cubic B-splines).}
   \item{nest.div}{numerical vector of length 2 containing the divisor of the number of segments (\code{nseg}) to be used for the construction of the nested B-spline basis for the smooth-by-smooth interaction component. In this case, the nested B-spline basis will be constructed assuming a total of \code{nseg}/\code{nest.div} segments. Default set to 1, which implies that nested basis are not used. See details.}
   \item{ANOVA}{logical. If TRUE, four different smoothing parameters are considered: two for the main effects and two for the smooth interaction. See details.}
+  \item{center}{logical. If TRUE, the fitted spatial trend (2D surface) will be centered at zero for the observed data (i.e., the average of the fitted spatial trend will be zero at the observed data). By default FALSE (for compatibility with versions of the package previous to 1.0-13.}
 }
 \details{
 Within the P-spline framework, anisotropic low-rank tensor-product smoothers have become the general approach for modelling multidimensional surfaces (Eilers and Marx 2003; Wood 2006). In this package, we propose to model the spatial or environmental effect by means of the tensor-product of B-splines basis functions. In other words, we propose to model the spatial trend as a smooth bivariate surface jointly defined over the the spatial coordinates. Accordingly, the current function has been designed to allow the user to specify the spatial coordinates that the spatial trend is a function of. There is no restriction about how the spatial coordinates shall be specified: these can be the longitude and latitude of the position of the plot on the field or the column and row numbers. The only restriction is that the variables defining the spatial coordinates should be numeric (in contrast to factors).

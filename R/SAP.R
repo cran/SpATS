@@ -1,5 +1,5 @@
 SAP <-
-function(..., nseg = c(10, 10), pord = c(2,2), degree = c(3,3), nest.div = c(1,1), ANOVA = FALSE) {
+function(..., nseg = c(10, 10), pord = c(2,2), degree = c(3,3), nest.div = c(1,1), ANOVA = FALSE, center = FALSE) {
     args <- match.call()
     vars <- as.list(substitute(list(...)))[-1]
     if(length(vars) != 2) 
@@ -15,6 +15,7 @@ function(..., nseg = c(10, 10), pord = c(2,2), degree = c(3,3), nest.div = c(1,1
     res$pord = if(length(pord) == 1) rep(pord, 2) else pord
     res$degree = if(length(degree) == 1) rep(degree, 2) else degree
     res$nest.div = if(length(nest.div) == 1) rep(nest.div, 2) else nest.div
+    res$center <- center
     res$type <- if(ANOVA) "SAP.ANOVA" else "SAP"
     
     res 

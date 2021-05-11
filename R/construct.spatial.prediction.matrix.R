@@ -29,6 +29,11 @@ function(object, newdata) {
 	} else {
 		Zp <- cbind(Rten2(X2p[,1, drop = FALSE], Z1p), Rten2(Z2p, X1p[,1, drop = FALSE]), Rten2(X2p[,-1, drop = FALSE], Z1p), Rten2(Z2p, X1p[,-1, drop = FALSE]), Rten2(Z2pn, Z1pn))
 	}
+
+	# Center matrices
+	Xp <- sweep(Xp, 2, object$terms$spatial$cm$X)
+	Zp <- sweep(Zp, 2, object$terms$spatial$cm$Z)
+
 	res <- list(X = Xp, Z = Zp)
 	res	
 }

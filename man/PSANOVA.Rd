@@ -7,7 +7,8 @@ Define a two-dimensional penalised tensor-product of marginal B-Spline basis fun
 Auxiliary function used for modelling the spatial or environmental effect as a two-dimensional penalised tensor-product of marginal B-spline basis functions with anisotropic penalties on the basis of the PSANOVA approach by Lee et al. (2013).
 }
 \usage{
-PSANOVA(..., nseg = c(10,10), pord = c(2,2), degree = c(3,3), nest.div = c(1,1))
+PSANOVA(..., nseg = c(10,10), pord = c(2,2), degree = c(3,3), nest.div = c(1,1), 
+	center = FALSE)
 }
 \arguments{
   \item{\dots}{a list of the covariates that this smooth component is a function of. Currently, only two-dimensional tensor-product smoothers are implemented: the first covariate is assumed to define the x-spatial coordinate (e.g., column position) of each plot in the field, and the second argument the y-spatial coordinate (i.e., the row position). Both covariates should be numerical.}
@@ -15,6 +16,7 @@ PSANOVA(..., nseg = c(10,10), pord = c(2,2), degree = c(3,3), nest.div = c(1,1))
   \item{pord}{numerical vector of length 2 containing the penalty order for each marginal. Atomic values are also valid, being recycled. Default set to 2 (second order). Currently, only second order penalties are allowed.}
   \item{degree}{numerical vector of length 2 containing the order of the polynomial of the B-spline basis for each marginal. Atomic values are also valid, being recycled. Default set to 3 (cubic B-splines).}
   \item{nest.div}{numerical vector of length 2 containing the divisor of the number of segments (\code{nseg}) to be used for the construction of the nested B-spline basis for the smooth-by-smooth interaction component. In this case, the nested B-spline basis will be constructed assuming a total of \code{nseg}/\code{nest.div} segments. Default set to 1, which implies that nested basis are not used. See \code{\link{SAP}} for more details.}
+  \item{center}{logical. If TRUE, the fitted spatial trend (2D surface) will be centered at zero for the observed data (i.e., the average of the fitted spatial trend will be zero at the observed data). By default FALSE (for compatibility with versions of the package previous to 1.0-13.}
 }
 \details{
 The approach implemented here represents an alternative method to the \code{\link{SAP}} function. In this case, the smooth bivariate surface (or spatial trend) is decomposed in five different components each of them depending on a single smoothing parameter (see Lee et al., 2013).

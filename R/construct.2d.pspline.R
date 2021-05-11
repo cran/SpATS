@@ -1,5 +1,5 @@
 construct.2d.pspline <-
-function(formula, data) {
+function(formula, data, na.res) {
 	env <- environment(formula) 
 	if(inherits(formula, "character"))          
 		formula <- as.formula(formula)
@@ -154,16 +154,30 @@ function(formula, data) {
 	attr(dim$random, "random") <- attr(dim$random, "spatial") <- rep(TRUE, length(dim$random)) 
 	attr(dim$random, "sparse") <- rep(FALSE, length(dim$random))
 
+
+	# Center matrices
+	if(res$center) {
+		cmX <- colMeans(X[!na.res,])
+		cmZ <- colMeans(Z[!na.res,])
+
+		X <- sweep(X, 2, cmX)
+		Z <- sweep(Z, 2, cmZ)
+	} else {
+		cmX <- rep(0, ncol(X))
+		cmZ <- rep(0, ncol(Z))
+	}
+
 	terms <- list()
 	terms$MM <- list(MM1 = MM1, MM2 = MM2)
 	terms$MMn <- list(MM1 = MM1n, MM2 = MM2n)
 	terms$terms.formula <- res
+	terms$cm <- list(X = cmX, Z = cmZ)
 	
 	attr(terms, "term") <- smooth.comp
 	
 	# Initialize variance components
 	init.var <- rep(1, length(g))
-	
+
 	res <- list(X = X, Z = Z, dim = dim, g = g, init.var = init.var, terms = terms)	
 	res
 }

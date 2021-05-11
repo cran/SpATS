@@ -33,10 +33,17 @@ function(object, grid = c(100,100), ...) {
 	Xp <- X2p%x%X1p
 	Xp <- Xp[,-1,drop = FALSE]
 	
+	# Center matrix
+	Xp <- sweep(Xp, 2, object$terms$spatial$cm$X)
+
 	eta0 <- matrix(Xp%*%fixed.spat.coef, nrow = length(row.p), ncol = length(col.p), byrow = TRUE)
 	
 	if(terms.formula$type == "SAP") {
 		Zp <- cbind(X2p%x%Z1p, Z2p%x%X1p, Z2pn%x%Z1pn)
+		
+		# Center matrix
+		Zp <- sweep(Zp, 2, object$terms$spatial$cm$Z)
+		
 		eta1 <- matrix(Zp%*%random.spat.coef, nrow = length(row.p), ncol = length(col.p), byrow = TRUE)
 	} else {		
 		# Separate for each PS-ANOVA component
@@ -47,19 +54,28 @@ function(object, grid = c(100,100), ...) {
 		Zp5 <- Z2pn%x%Z1pn
 		
 		Zp = cbind(Zp1, Zp2, Zp3, Zp4, Zp5)
+		
+		# Center matrix
+		Zp <- sweep(Zp, 2, object$terms$spatial$cm$Z)
+
 		dims <- c(ncol(Zp1), ncol(Zp2), ncol(Zp3), ncol(Zp4), ncol(Zp5))
 		e <- cumsum(dims)
 		s <- e - dims + 1
 		# Main effectts
-		eta1 <- matrix(Zp1%*%random.spat.coef[s[1]:e[1]], nrow = length(row.p), ncol = length(col.p), byrow = TRUE)
-		eta2 <- matrix(Zp2%*%random.spat.coef[s[2]:e[2]], nrow = length(row.p), ncol = length(col.p), byrow = TRUE)
+		#eta1 <- matrix(Zp1%*%random.spat.coef[s[1]:e[1]], nrow = length(row.p), ncol = length(col.p), byrow = TRUE)
+		#eta2 <- matrix(Zp2%*%random.spat.coef[s[2]:e[2]], nrow = length(row.p), ncol = length(col.p), byrow = TRUE)
+		eta1 <- matrix(Zp[,s[1]:e[1]]%*%random.spat.coef[s[1]:e[1]], nrow = length(row.p), ncol = length(col.p), byrow = TRUE)
+		eta2 <- matrix(Zp[,s[2]:e[2]]%*%random.spat.coef[s[2]:e[2]], nrow = length(row.p), ncol = length(col.p), byrow = TRUE)
 		
 		# Linear-by-smooth
-		eta3 <- matrix(Zp3%*%random.spat.coef[s[3]:e[3]], ncol = length(col.p), byrow = TRUE)		
-		eta4 <- matrix(Zp4%*%random.spat.coef[s[4]:e[4]], ncol = length(col.p), byrow = TRUE)
+		#eta3 <- matrix(Zp3%*%random.spat.coef[s[3]:e[3]], ncol = length(col.p), byrow = TRUE)		
+		#eta4 <- matrix(Zp4%*%random.spat.coef[s[4]:e[4]], ncol = length(col.p), byrow = TRUE)
+		eta3 <- matrix(Zp[,s[3]:e[3]]%*%random.spat.coef[s[3]:e[3]], ncol = length(col.p), byrow = TRUE)		
+		eta4 <- matrix(Zp[,s[4]:e[4]]%*%random.spat.coef[s[4]:e[4]], ncol = length(col.p), byrow = TRUE)
 		
 		# Smooth-by-smooth
-		eta5 <- matrix(Zp5%*%random.spat.coef[s[5]:e[5]], nrow = length(row.p), ncol = length(col.p), byrow = TRUE)
+		#eta5 <- matrix(Zp5%*%random.spat.coef[s[5]:e[5]], nrow = length(row.p), ncol = length(col.p), byrow = TRUE)
+		eta5 <- matrix(Zp[,s[5]:e[5]]%*%random.spat.coef[s[5]:e[5]], nrow = length(row.p), ncol = length(col.p), byrow = TRUE)
 	
 	}
 	eta <- cbind(Xp,Zp)%*%c(fixed.spat.coef, random.spat.coef)

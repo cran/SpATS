@@ -1,5 +1,5 @@
 construct.design.matrix <-
-function(genotype, geno.decomp = NULL, grandom = FALSE, spatial, fixed = NULL, random = NULL, data, weights) {
+function(genotype, geno.decomp = NULL, grandom = FALSE, spatial, fixed = NULL, random = NULL, data, weights, na.res) {
 	# Create the mixed model matrices
 	MMs <- MMns <- NULL
 	gg <- init.var <- dim <- list()
@@ -40,7 +40,7 @@ function(genotype, geno.decomp = NULL, grandom = FALSE, spatial, fixed = NULL, r
 		init.var <- c(init.var, list(random.part$init.var))
 	}
 	# Smooth (spatial part)
-	spat.part <- construct.2d.pspline(formula = spatial, data = data)
+	spat.part <- construct.2d.pspline(formula = spatial, data = data, na.res = na.res)
 	MMns <- cbind(MMns, spat.part$X, spat.part$Z)
 	dim <- c(dim, list(spat.part$dim$fixed), list(spat.part$dim$random))
 	gg <- c(gg, list(spat.part$g))

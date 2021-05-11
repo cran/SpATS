@@ -43,7 +43,8 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 	model.terms <- c(sf$x.coord, sf$y.coord, if(genotype.as.random) geno.decomp else genotype, if(!is.null(fixed)) all.vars(fixed))
 	na.ind <- apply(is.na(data[,model.terms]), 1, any)
 	na.pos <- (1:nrow(data))[!na.ind]
-	weights <- weights*(!na.ind)*(!is.na(data[,response]))
+	na.res <- is.na(data[,response])
+	weights <- weights*(!na.ind)*(!na.res)
 
 	data.na <- data[!na.ind,]
 	weights.na <- weights[!na.ind]
@@ -52,7 +53,7 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 	y <- data.na[,response]
 	nobs <- length(y[weights.na != 0])
 
-	MM <- construct.design.matrix(genotype = genotype, geno.decomp = geno.decomp, grandom = genotype.as.random, spatial = spatial, fixed = fixed, random = random, data = data.na, weights = weights.na)
+	MM <- construct.design.matrix(genotype = genotype, geno.decomp = geno.decomp, grandom = genotype.as.random, spatial = spatial, fixed = fixed, random = random, data = data.na, weights = weights.na, na.res = na.res)
 	MMs <- MM$MM$MMs
 	MMns <- MM$MM$MMns
 	geno.part <- MM$geno.part

@@ -1,5 +1,5 @@
 PSANOVA <-
-function(..., nseg = c(10, 10), pord = c(2,2), degree = c(3,3), nest.div = c(1,1)) {   
+function(..., nseg = c(10, 10), pord = c(2,2), degree = c(3,3), nest.div = c(1,1), center = FALSE) {   
     args <- match.call()
 	vars <- as.list(substitute(list(...)))[-1]
     if(length(vars) != 2) 
@@ -14,10 +14,11 @@ function(..., nseg = c(10, 10), pord = c(2,2), degree = c(3,3), nest.div = c(1,1
   	res <- list()
   	res$x.coord <- deparse(x.coord, backtick = TRUE, width.cutoff = 500)
   	res$y.coord <- deparse(y.coord, backtick = TRUE, width.cutoff = 500)
-  	res$nseg = if(length(nseg) == 1) rep(nseg, 2) else nseg
-  	res$pord = if(length(pord) == 1) rep(pord, 2) else pord
-  	res$degree = if(length(degree) == 1) rep(degree, 2) else degree
-  	res$nest.div = if(length(nest.div) == 1) rep(nest.div, 2) else nest.div
+  	res$nseg <- if(length(nseg) == 1) rep(nseg, 2) else nseg
+  	res$pord <- if(length(pord) == 1) rep(pord, 2) else pord
+  	res$degree <- if(length(degree) == 1) rep(degree, 2) else degree
+  	res$nest.div <- if(length(nest.div) == 1) rep(nest.div, 2) else nest.div
+    res$center <- center
   	res$type <- "PSANOVA"
   	
   	res
