@@ -43,12 +43,12 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 	model.terms <- c(sf$x.coord, sf$y.coord, if(genotype.as.random) geno.decomp else genotype, if(!is.null(fixed)) all.vars(fixed))
 	na.ind <- apply(is.na(data[,model.terms]), 1, any)
 	na.pos <- (1:nrow(data))[!na.ind]
-	na.res <- is.na(data[,response])
-	weights <- weights*(!na.ind)*(!na.res)
+	weights <- weights*(!na.ind)*(!is.na(data[,response]))
 
 	data.na <- data[!na.ind,]
 	weights.na <- weights[!na.ind]
 	offset.na <-  offset[!na.ind]
+	na.res <- is.na(data.na[,response])
 	
 	y <- data.na[,response]
 	nobs <- length(y[weights.na != 0])
