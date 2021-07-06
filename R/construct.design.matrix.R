@@ -27,7 +27,7 @@ function(genotype, geno.decomp = NULL, grandom = FALSE, spatial, fixed = NULL, r
 	dim <- c(dim, list(dim.int))
 	
 	if(!is.null(fixed)) {
-		fixed.part <- construct.fixed.part(formula = fixed, data = data)
+		fixed.part <- construct.fixed.part(formula = fixed, data = data, genotype = genotype, grandom = grandom)
 		MMns <- cbind(MMns, fixed.part$X)
 		dim <- c(dim, list(fixed.part$dim))
 	}

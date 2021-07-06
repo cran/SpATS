@@ -1,6 +1,6 @@
-98c54105a04dd4ea7a7cc7a9be33af49 *DESCRIPTION
+bc0f0ea68fdb44162d95d069f3685d75 *DESCRIPTION
 039d1e1b7916daa64e6500fb6b50768a *NAMESPACE
-39c68ce59c3eb2b4d40b55917bb24696 *NEWS
+3d51626240f90501c538ad4c628b7bdc *NEWS
 6cd364c3d46456c22f8db11d81823145 *R/MM.basis.R
 bf5416375c8b8d73ff0e81bc9ba08fa9 *R/PSANOVA.R
 88a8b88495a9a1c03bf7b0de97a6dc3b *R/Rten.R
@@ -12,9 +12,9 @@ ae91da19ac81277d26b5df60403058b9 *R/bbase.R
 994401559854b72d39db3748d5114521 *R/construct.2d.pspline.R
 86cf5d3ee9e59eadb3d835682616985d *R/construct.block.R
 f768e1c4d8af374404415f7a20445f35 *R/construct.capital.lambda.R
-b4615cae527fee325df2b7e055a7840b *R/construct.design.matrix.R
-21f744348e48fae77d918183ea06b38c *R/construct.fixed.part.R
-6d8557d2aac3f5d44947dbee6c7d0c71 *R/construct.fixed.prediction.matrix.R
+e5f2d737d24780beac6abf8656d5f311 *R/construct.design.matrix.R
+01676204abf3f219f2d983bd3a4107cb *R/construct.fixed.part.R
+1efa240bd8c5a3bca96522c68ba632d0 *R/construct.fixed.prediction.matrix.R
 68c2c294ff518a52133f38d7aef42919 *R/construct.genotype.fixed.part.R
 0464cea68ec530454cc8d8126d56e68e *R/construct.genotype.prediction.matrix.R
 ac5494f692bb38bbafa682b293d5cc1a *R/construct.genotype.random.part.R
@@ -35,7 +35,7 @@ a66021f66bd8fa6226b7aa2f4d3fe42d *R/get.attribute.R
 8a353d646d09a8e22bb1844878c1b74b *R/obtain.spatialtrend.R
 c29837f34058a170526ec6a904c28ee9 *R/plot.SpATS.R
 80a70ab32b5305c8f19ec053bd16565f *R/plot.variogram.SpATS.R
-86337fa79d3f62d37f8010935f757145 *R/predict.SpATS.R
+08b03dfae904815c817ba9cf49a91efc *R/predict.SpATS.R
 a2cb10f9249a2336e1aa13899eff98c3 *R/print.SpATS.R
 b710adaaa00c9ca61f2b3a8ff0d08399 *R/print.summary.SpATS.R
 43f47c49e65a3d2a2d5db96285e25bfd *R/spline.bbase.R
@@ -47,7 +47,7 @@ a12a522094577c76fea4dcdada43b6bb *R/summary.SpATS.R
 7010adf7a8b9f366cb786e4f16d2dd25 *inst/CITATION
 fc5f72aa858b97d5fa25762c5a156b1d *man/PSANOVA.Rd
 f89b79a88edea1036debca6a3c975081 *man/SAP.Rd
-5808a39fdb5995ab17e8adb64e2abaab *man/SpATS-package.Rd
+813ab48e38b0c3f1eb87d4cbfcf4338d *man/SpATS-package.Rd
 5c9f64a4d4203d6461d24566e8360036 *man/SpATS.Rd
 5410fb5a86dd93d703082f7802ae9e86 *man/controlSpATS.Rd
 3793a56745fb10116affea5691933f56 *man/getHeritability.Rd

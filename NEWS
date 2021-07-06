@@ -21,3 +21,6 @@
 	CHANGES in `SpATS' VERSION 1.0-14
 	o	Bug corrected
 
+	CHANGES in `SpATS' VERSION 1.0-15
+	o	It is now possible to include the interaction between genotypes and a treatment factor when both are modelled as fixed effects.
+

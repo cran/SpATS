@@ -45,7 +45,7 @@ function(object, newdata = NULL, which = NULL, predFixed = c("conditional", "mar
 			newdata <- newdata[ind.geno,,drop = FALSE]
 		}
 		for(i in model.terms[!model.terms %in% which]) {
-			if(is.factor(object$data[,i])) {
+			if(is.factor(object$data[,i]) || is.character(object$data[,i])) {
 				if(!is.null(object$terms$fixed) & (i %in% all.vars(object$terms$fixed))) {
 					newdata[,i] <- attr(object$terms$fixed, "xlev")[[i]][1]
 				} else if (i %in% object$model$geno$genotype & !object$model$geno$as.random) {
@@ -91,12 +91,12 @@ function(object, newdata = NULL, which = NULL, predFixed = c("conditional", "mar
 				for(i in 1:nrow(lev.expanded)) {
 					aux <- newdata
 					aux[, names(lev.expanded)] <- lev.expanded[i,]
-					list.fixed.matrix[[i]] <- construct.fixed.prediction.matrix(object, aux)
+					list.fixed.matrix[[i]] <- construct.fixed.prediction.matrix(object, aux, object$model$geno$genotype, object$model$geno$as.random)
 				}
 				# Average over the data.frames
 				fixed.matrix <- Reduce('+', list.fixed.matrix)/length(list.fixed.matrix)
 			} else {
-				fixed.matrix <- construct.fixed.prediction.matrix(object, newdata)
+				fixed.matrix <- construct.fixed.prediction.matrix(object, newdata, object$model$geno$genotype, object$model$geno$as.random)
 			}
 		# For the genotypes
 			MMsp <- construct.genotype.prediction.matrix(object, newdata)
@@ -104,11 +104,11 @@ function(object, newdata = NULL, which = NULL, predFixed = c("conditional", "mar
 				MMsp <- matrix(1, ncol = ncol(MMsp), nrow = nrow(MMsp))/ (nrow(MMsp) + 1)
 			}
 		} else {
-			fixed.matrix <- construct.fixed.prediction.matrix(object, newdata)
+			fixed.matrix <- construct.fixed.prediction.matrix(object, newdata, object$model$geno$genotype, object$model$geno$as.random)
 			MMsp <- construct.genotype.prediction.matrix(object, newdata)
 		}
 	} else {
-		fixed.matrix <- construct.fixed.prediction.matrix(object, newdata)
+		fixed.matrix <- construct.fixed.prediction.matrix(object, newdata, object$model$geno$genotype, object$model$geno$as.random)
 		MMsp <- construct.genotype.prediction.matrix(object, newdata)
 	}
 	# Construct matrices
