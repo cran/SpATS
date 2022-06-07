@@ -25,5 +25,8 @@
 	o	It is now possible to include the interaction between genotypes and a treatment factor when both are modelled as fixed effects.
 
 	CHANGES in `SpATS' VERSION 1.0-16
-	o   Mantainer's email changed	
+	o   Mantainer's email changed
+
+	CHANGES in `SpATS' VERSION 1.0-17
+	o   persp3Drgl no longer used when plotting the variogram (now the plot is static)		
 
