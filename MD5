@@ -1,6 +1,6 @@
-f3214ce9d3414c59492a002df2d773b1 *DESCRIPTION
+cfacb0a248d4d8c12dabd9d6fd2217b3 *DESCRIPTION
 039d1e1b7916daa64e6500fb6b50768a *NAMESPACE
-be01944509a14a6c6190864c54975858 *NEWS
+47b28248c969baa720cff9bb290e52b4 *NEWS
 6cd364c3d46456c22f8db11d81823145 *R/MM.basis.R
 bf5416375c8b8d73ff0e81bc9ba08fa9 *R/PSANOVA.R
 88a8b88495a9a1c03bf7b0de97a6dc3b *R/Rten.R
@@ -16,7 +16,7 @@ e5f2d737d24780beac6abf8656d5f311 *R/construct.design.matrix.R
 01676204abf3f219f2d983bd3a4107cb *R/construct.fixed.part.R
 1efa240bd8c5a3bca96522c68ba632d0 *R/construct.fixed.prediction.matrix.R
 68c2c294ff518a52133f38d7aef42919 *R/construct.genotype.fixed.part.R
-0464cea68ec530454cc8d8126d56e68e *R/construct.genotype.prediction.matrix.R
+330b4f29762cdc168914a33f89b87f88 *R/construct.genotype.prediction.matrix.R
 ac5494f692bb38bbafa682b293d5cc1a *R/construct.genotype.random.part.R
 1554059de94242afab8cdc76a864e1ae *R/construct.henderson.matrix.R
 c1423bee6ec2598c6e580f081c96eb9b *R/construct.matrices.R
@@ -47,7 +47,7 @@ a12a522094577c76fea4dcdada43b6bb *R/summary.SpATS.R
 7010adf7a8b9f366cb786e4f16d2dd25 *inst/CITATION
 fc5f72aa858b97d5fa25762c5a156b1d *man/PSANOVA.Rd
 f89b79a88edea1036debca6a3c975081 *man/SAP.Rd
-e28bb396d3b4250c36e790818587f797 *man/SpATS-package.Rd
+68a9b56d28349d910c270ff2924d2384 *man/SpATS-package.Rd
 5c9f64a4d4203d6461d24566e8360036 *man/SpATS.Rd
 5410fb5a86dd93d703082f7802ae9e86 *man/controlSpATS.Rd
 3793a56745fb10116affea5691933f56 *man/getHeritability.Rd
