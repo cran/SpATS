@@ -1,5 +1,25 @@
 MM.basis <-
 function (x, xl, xr, ndx, bdeg, pord, decom = 1) {
+	# Check that ndx, bdf and pord are integers
+	ndx.new <- round(ndx)
+	if (all.equal(ndx.new, ndx) != TRUE) {
+		warning("argument 'nseg' of PSANOVA()/SAP() should be integer and has been rounded")
+	}
+	ndx <- ndx.new
+	
+	pord.new <-round(pord)
+	if (all.equal(pord.new, pord) != TRUE) {
+		warning("argument 'pord' of PSANOVA()/SAP() should be integer and has been rounded")
+	}
+	pord <- pord.new
+
+	bdeg.new <-round(bdeg)
+	if (all.equal(bdeg.new, bdeg) != TRUE) {
+		warning("argument 'degree' of PSANOVA()/SAP() should be integer and has been rounded")
+	}
+	bdeg <- bdeg.new
+
+
 	Bb = bbase(x,xl,xr,ndx,bdeg)
 	knots <- Bb$knots
 	B = Bb$B

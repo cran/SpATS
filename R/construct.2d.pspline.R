@@ -11,8 +11,8 @@ function(formula, data, na.res) {
 	
 	type = res$type
 	
-	MM1 = MM.basis(x1, min(x1), max(x1), res$nseg[1], res$degree[1], res$pord[1], 4)
-	MM2 = MM.basis(x2, min(x2), max(x2), res$nseg[2], res$degree[2], res$pord[2], 4)
+	MM1 <- MM.basis(x1, min(x1), max(x1), res$nseg[1], res$degree[1], res$pord[1], 4)
+	MM2 <- MM.basis(x2, min(x2), max(x2), res$nseg[2], res$degree[2], res$pord[2], 4)
 		
 	X1 <- MM1$X; Z1 <- MM1$Z; d1 <- MM1$d; B1 <- MM1$B
 	X2 <- MM2$X; Z2 <- MM2$Z; d2 <- MM2$d; B2 <- MM2$B

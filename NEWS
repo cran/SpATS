@@ -33,3 +33,7 @@
 	CHANGES in `SpATS' VERSION 1.0-18
 	o   Bug corrected
 
+	CHANGES in `SpATS' VERSION 1.0-19
+	o   Bug corrected. In the PSANOVA function, the number of segments, nseg, must be a multiple of the divisor of the number of segments, nest.div. This is now checked, and an error is returned if the condition is not met.
+	o   Bug corrected. In the PSANOVA and SAP functions, the number of segments (nseg), order of the polynomial (degree), and penalty order (pord) should be integers. This is now checked, and if any of these values are not integers, they will be rounded to the nearest integer, with a warning issued to inform the user.
+
