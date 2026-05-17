@@ -119,9 +119,15 @@ function(response, genotype, geno.decomp = NULL, genotype.as.random = FALSE, spa
 			obj <- construct.henderson.matrix(mat, la, Ginv, dim, sparse., random., fixed.matrices = if(genotype.as.random) NULL else list(M = M, C21_C11_inv_C12 = C21_C11_inv_C12, M_Xty. = M_Xty.), as.random = genotype.as.random)
 			
 			# Fixed and random effects estimation
+			# First check
+			if(qr(obj$K)$rank != ncol(obj$K)) {
+				stop("The design matrix associated to the fixed part of the model is not of full rank. Please check that there are no redundant components in the fixed part of the model.")
+			}
+
+			# Second check
 			chol_K <- try(chol(obj$K), silent = TRUE)
 			if(inherits(chol_K, "try-error")) {
-				stop("The design matrix associated to the fixed part of the model is not of full rank. Please check that there are no redundant components in the fixed part of the model.")	
+				stop("The design matrix associated to the fixed part of the model is not of full rank. Please check that there are no redundant components in the fixed part of the model.")
 			}
 
 			K_inv <- chol2inv(chol_K)

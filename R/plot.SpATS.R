@@ -32,6 +32,30 @@ function(x, all.in.one = TRUE, main = NULL, annotated = FALSE, depict.missing = 
     setkeyv(xy.coord, c("rows", "columns"))
     ONE <- rep(1, length(x.coord))    
     df <- data.table(columns = x.coord, rows = y.coord, response = response, fitted = fitted, residuals = residuals, geno.pred = geno.pred, weights = x$data$weights, ONE = ONE)
+    
+    ## Check whether there is more than one observation per plot
+    n.obs <- df[, list(N = length(response)), by = list(rows, columns)]
+    dup.plots <- n.obs[n.obs[["N"]] > 1]
+    if (nrow(dup.plots) > 0) {
+        message(
+            "There are ", nrow(dup.plots),
+            " spatial positions with more than one observation. ",
+            "Values will be averaged within each position."
+        )
+        mean_NA <- function(z) {
+            if (all(is.na(z))) NA_real_ else mean(z, na.rm = TRUE)
+            }
+    
+        df <- df[, list(
+            response  = mean_NA(response),
+            fitted    = mean_NA(fitted),
+            residuals = mean_NA(residuals),
+            geno.pred = mean_NA(geno.pred),
+            weights   = mean_NA(weights),
+            ONE       = 1
+        ), by = list(rows, columns)]
+    }
+    
     setkeyv(df, c("rows", "columns"))
     df <- df[xy.coord]
     df <- df[order(df$columns, df$rows),]
